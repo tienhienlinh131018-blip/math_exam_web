@@ -106,7 +106,8 @@ Yêu cầu chi tiết:
             
         return jsonify({'html': clean_html.strip()})
     except Exception as e:
-        error_msg = str(e)
+        import traceback
+        error_msg = f"{str(e)}\n{traceback.format_exc()}"
         if "429" in error_msg:
             error_msg = "Lỗi: Đã hết hạn mức sử dụng API (Quota Exceeded). Vui lòng thử lại sau vài phút."
         return jsonify({'error': error_msg}), 500

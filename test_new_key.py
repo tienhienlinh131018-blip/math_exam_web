@@ -1,7 +1,7 @@
 import os
 from google import genai
 
-api_key = "AIzaSyBPbJVwkThTqbn5pjcmKdtOLdR_dbUlj5Q"
+api_key = "YOUR_API_KEY_HERE"
 
 try:
     print("Testing gemini-1.5-flash...")

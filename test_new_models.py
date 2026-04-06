@@ -1,7 +1,7 @@
 import os
 from google import genai
 
-api_key = "AIzaSyBPbJVwkThTqbn5pjcmKdtOLdR_dbUlj5Q"
+api_key = "YOUR_API_KEY_HERE"
 client = genai.Client(api_key=api_key)
 
 models_to_test = ['gemini-2.5-flash', 'gemini-3-flash-preview', 'gemini-flash-latest']

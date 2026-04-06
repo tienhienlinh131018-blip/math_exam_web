@@ -1,5 +1,5 @@
 import requests
-api_key = "AIzaSyBPbJVwkThTqbn5pjcmKdtOLdR_dbUlj5Q"
+api_key = "YOUR_API_KEY_HERE"
 url = f"https://generativelanguage.googleapis.com/v1beta/models?key={api_key}"
 response = requests.get(url)
 models = response.json().get('models', [])

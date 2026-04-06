@@ -7,14 +7,19 @@ from dotenv import load_dotenv
 load_dotenv(override=True) # Tải biến môi trường từ file .env (ghi đè nếu có thay đổi)
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "bo_super_secret_key_123") # Khóa bảo mật của Session
+app.secret_key = os.getenv("FLASK_SECRET_KEY") or os.urandom(24).hex() # Khóa bảo mật ngẫu nhiên nếu không cấu hình
 
 def load_users():
     try:
         with open('users.json', 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
-        return {"admin": "admin123"} # Phục hồi nếu lỡ xoá file users.json
+        # Thay vì dùng mật khẩu mặc định "admin123", chỉ cho đăng nhập nếu cố tình gán qua biến môi trường
+        admin_pass = os.getenv("ADMIN_PASSWORD")
+        if admin_pass:
+            return {"admin": admin_pass}
+        return {} # Từ chối đăng nhập nếu không có file hoặc cấu hình an toàn
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

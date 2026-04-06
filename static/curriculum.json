@@ -1,0 +1,224 @@
+{
+  "1": {
+    "1": [
+      {
+        "chapter": "Các số từ 0 đến 10",
+        "lessons": ["Các số 1, 2, 3", "Các số 4, 5", "Số 0", "Các số 6, 7, 8, 9, 10", "So sánh các số trong phạm vi 10", "Luyện tập chung chương 1"]
+      },
+      {
+        "chapter": "Làm quen với một số hình phẳng",
+        "lessons": ["Hình vuông, hình tròn, hình tam giác, hình chữ nhật", "Ghép hình", "Luyện tập chung chương 2"]
+      },
+      {
+        "chapter": "Phép cộng, phép trừ trong phạm vi 10",
+        "lessons": ["Phép cộng trong phạm vi 10", "Phép trừ trong phạm vi 10", "Bảng cộng và bảng trừ trong phạm vi 10", "Luyện tập chung chương 3"]
+      },
+      {
+        "chapter": "Làm quen với một số hình khối",
+        "lessons": ["Khối lập phương, khối hộp chữ nhật", "Luyện tập chung chương 4"]
+      },
+      {
+        "chapter": "Ôn tập học kì 1",
+        "lessons": ["Ôn tập các số phạm vi 10", "Ôn tập phép cộng, trừ phạm vi 10", "Đề ôn tập học kì 1"]
+      }
+    ],
+    "2": [
+      {
+        "chapter": "Các số đến 100",
+        "lessons": ["Các số đến 20", "Các số tròn chục", "Các số có hai chữ số", "So sánh các số trong phạm vi 100", "Luyện tập chung chương 5"]
+      },
+      {
+        "chapter": "Độ dài và đo độ dài",
+        "lessons": ["Đơn vị đo độ dài (cm)", "Đo độ dài đoạn thẳng", "Luyện tập chung chương 6"]
+      },
+      {
+        "chapter": "Phép cộng, phép trừ (không nhớ) trong phạm vi 100",
+        "lessons": ["Cộng số có hai chữ số", "Trừ số có hai chữ số", "Luyện tập cộng trừ không nhớ", "Luyện tập chung chương 7"]
+      },
+      {
+        "chapter": "Thời gian",
+        "lessons": ["Giờ đúng trên đồng hồ", "Các ngày trong tuần", "Luyện tập chung chương 8"]
+      },
+      {
+        "chapter": "Ôn tập cuối năm",
+        "lessons": ["Ôn tập các số phạm vi 100", "Ôn tập phép cộng, trừ phạm vi 100", "Đề ôn tập học kì 2"]
+      }
+    ]
+  },
+  "2": {
+    "1": [
+      {
+        "chapter": "Ôn tập và bổ sung",
+        "lessons": ["Ôn tập các số đến 100", "Ôn tập phép cộng, phép trừ không nhớ", "Luyện tập chung chương 1"]
+      },
+      {
+        "chapter": "Phép cộng, phép trừ (có nhớ) trong phạm vi 100",
+        "lessons": ["Phép cộng có nhớ (số có hai chữ số)", "Phép trừ có nhớ (số có hai chữ số)", "Bài toán về nhiều hơn, ít hơn", "Luyện tập chung chương 2"]
+      },
+      {
+        "chapter": "Hình học trực quan",
+        "lessons": ["Điểm, đoạn thẳng", "Đường thẳng, đường cong", "Ba điểm thẳng hàng", "Luyện tập chung chương 3"]
+      },
+      {
+        "chapter": "Phép nhân, phép chia",
+        "lessons": ["Làm quen với phép nhân", "Bảng nhân 2, bảng nhân 5", "Làm quen với phép chia", "Bảng chia 2, bảng chia 5", "Luyện tập chung chương 4"]
+      },
+      {
+        "chapter": "Ôn tập học kì 1",
+        "lessons": ["Ôn tập phép cộng, trừ có nhớ", "Ôn tập hình học cơ bản", "Đề ôn tập học kì 1"]
+      }
+    ],
+    "2": [
+      {
+        "chapter": "Các số đến 1000",
+        "lessons": ["Đơn vị, chục, trăm", "Các số từ 101 đến 110", "Các số có ba chữ số", "So sánh các số có ba chữ số", "Luyện tập chung chương 5"]
+      },
+      {
+        "chapter": "Các phép tính trong phạm vi 1000",
+        "lessons": ["Phép cộng không nhớ trong phạm vi 1000", "Phép trừ không nhớ trong phạm vi 1000", "Luyện tập chung chương 6"]
+      },
+      {
+        "chapter": "Đo lường",
+        "lessons": ["Mét, Ki-lô-mét, Mi-li-mét", "Khối lượng (kg)", "Dung tích (lít)", "Luyện tập chung chương 7"]
+      },
+      {
+        "chapter": "Tiền Việt Nam",
+        "lessons": ["Nhận biết các loại tiền đồng", "Luyện tập chung chương 8"]
+      },
+      {
+        "chapter": "Ôn tập cuối năm",
+        "lessons": ["Ôn tập các số phạm vi 1000", "Ôn tập phép nhân, chia 2 và 5", "Đề ôn tập học kì 2"]
+      }
+    ]
+  },
+  "3": {
+    "1": [
+      {
+        "chapter": "Ôn tập và bổ sung",
+        "lessons": ["Ôn tập các số đến 1000", "Ôn tập phép cộng, phép trừ trong phạm vi 1000", "Luyện tập chung chương 1"]
+      },
+      {
+        "chapter": "Bảng nhân và bảng chia",
+        "lessons": ["Bảng nhân 3, 4, 6, 7, 8, 9", "Bảng chia 3, 4, 6, 7, 8, 9", "Gấp một số lên nhiều lần", "Giảm một số đi nhiều lần", "Luyện tập chung chương 2"]
+      },
+      {
+        "chapter": "Làm quen với biểu thức số",
+        "lessons": ["Tính giá trị của biểu thức số", "Luyện tập chung chương 3"]
+      },
+      {
+        "chapter": "Hình học và đo lường",
+        "lessons": ["Góc vuông, góc không vuông", "Hình tròn, tâm, đường kính, bán kính", "Vẽ trang trí hình tròn", "Luyện tập chung chương 4"]
+      },
+       {
+        "chapter": "Ôn tập học kì 1",
+        "lessons": ["Ôn tập bảng nhân, bảng chia", "Ôn tập tính giá trị biểu thức", "Đề ôn tập học kì 1"]
+      }
+    ],
+    "2": [
+      {
+        "chapter": "Các số đến 100.000",
+        "lessons": ["Các số trong phạm vi 10.000", "Các số trong phạm vi 100.000", "So sánh các số trong phạm vi 100.000", "Luyện tập chung chương 5"]
+      },
+      {
+        "chapter": "Các phép tính trong phạm vi 100.000",
+        "lessons": ["Phép cộng, phép trừ có nhớ", "Phép nhân, phép chia với số có một chữ số", "Luyện tập chung chương 6"]
+      },
+      {
+        "chapter": "Diện tích và chu vi",
+        "lessons": ["Chu vi hình tam giác, hình tứ giác", "Chu vi và diện tích hình chữ nhật, hình vuông", "Luyện tập chung chương 7"]
+      },
+      {
+        "chapter": "Thống kê và xác suất",
+        "lessons": ["Thu thập và phân loại số liệu", "Bảng số liệu", "Khả năng xảy ra của một sự kiện", "Luyện tập chung chương 8"]
+      },
+      {
+        "chapter": "Ôn tập cuối năm",
+        "lessons": ["Ôn tập các số phạm vi 100.000", "Ôn tập chu vi, diện tích", "Đề ôn tập học kì 2"]
+      }
+    ]
+  },
+  "4": {
+    "1": [
+      {
+        "chapter": "Số tự nhiên",
+        "lessons": ["Lớp đơn vị, lớp nghìn, lớp triệu", "So sánh các số tự nhiên", "Làm tròn số", "Luyện tập chung chương 1"]
+      },
+      {
+        "chapter": "Các phép tính với số tự nhiên",
+        "lessons": ["Phép cộng, phép trừ", "Phép nhân với số có hai chữ số", "Phép chia cho số có hai chữ số", "Luyện tập chung chương 2"]
+      },
+      {
+        "chapter": "Hình học",
+        "lessons": ["Góc nhọn, góc tù, góc bẹt", "Hai đường thẳng vuông góc", "Hai đường thẳng song song", "Luyện tập chung chương 3"]
+      },
+      {
+        "chapter": "Đo lường",
+        "lessons": ["Yến, tạ, tấn", "Giây, thế kỷ", "Luyện tập chung chương 4"]
+      },
+      {
+        "chapter": "Ôn tập học kì 1",
+        "lessons": ["Ôn tập các phép tính số tự nhiên", "Ôn tập đo lường và hình học", "Đề ôn tập học kì 1"]
+      }
+    ],
+    "2": [
+      {
+        "chapter": "Phân số",
+        "lessons": ["Khái niệm phân số", "Tính chất cơ bản của phân số", "Rút gọn phân số", "Quy đồng mẫu số", "Luyện tập chung chương 5"]
+      },
+      {
+        "chapter": "Các phép tính với phân số",
+        "lessons": ["Cộng, trừ phân số", "Nhân, chia phân số", "Luyện tập chung chương 6"]
+      },
+      {
+        "chapter": "Hình học phẳng",
+        "lessons": ["Hình bình hành", "Hình thoi", "Diện tích hình bình hành, hình thoi", "Luyện tập chung chương 7"]
+      },
+      {
+        "chapter": "Bài toán giải bằng nhiều bước tính",
+        "lessons": ["Tìm số trung bình cộng", "Bài toán rút về đơn vị", "Luyện tập chung chương 8"]
+      },
+      {
+        "chapter": "Ôn tập cuối năm",
+        "lessons": ["Ôn tập phân số và phép tính", "Ôn tập bài toán có lời văn", "Đề ôn tập học kì 2"]
+      }
+    ]
+  },
+  "5": {
+    "1": [
+      {
+        "chapter": "Ôn tập và bổ sung",
+        "lessons": ["Ôn tập về phân số", "Số thập phân", "So sánh và viết các phân số dưới dạng số thập phân", "Luyện tập chung chương 1"]
+      },
+      {
+        "chapter": "Số thập phân và các phép tính",
+        "lessons": ["Cộng, trừ số thập phân", "Nhân số thập phân với số tự nhiên", "Chia số thập phân cho số tự nhiên", "Luyện tập chung chương 2"]
+      },
+      {
+        "chapter": "Hình học",
+        "lessons": ["Hình tam giác và diện tích hình tam giác", "Hình thang và diện tích hình thang", "Hình tròn và chu vi, diện tích hình tròn", "Luyện tập chung chương 3"]
+      },
+      {
+        "chapter": "Ôn tập học kì 1",
+        "lessons": ["Ôn tập số thập phân", "Ôn tập hình học (tam giác, hình tròn)", "Đề ôn tập học kì 1"]
+      }
+    ],
+    "2": [
+       {
+        "chapter": "Hình khối",
+        "lessons": ["Hình hộp chữ nhật, hình lập phương", "Diện tích xung quanh và diện tích toàn phần", "Thể tích hình khối", "Luyện tập chung chương 4"]
+      },
+      {
+        "chapter": "Số đo thời gian và chuyển động",
+        "lessons": ["Cộng, trừ số đo thời gian", "Vận tốc, quãng đường, thời gian", "Luyện tập chung chương 5"]
+      },
+      {
+        "chapter": "Tỉ số phần trăm",
+        "lessons": ["Giải bài toán về tỉ số phần trăm", "Luyện tập chung chương 6"]
+      },
+      {
+        "chapter": "Ôn tập cuối năm",
+        "lessons": ["Ôn tập các nội dung trọng tâm Lớp 5", "Ôn tập chuyển động đều", "Đề ôn tập học kì 2"]
+      }
+    ]
+  }
+}

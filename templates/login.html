@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - Hệ Thống Học Tập Toán</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .login-container {
+            max-width: 450px;
+            margin: 15vh auto;
+            animation: fadeIn 0.8s ease-out;
+        }
+        .error-msg {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            text-align: center;
+            font-weight: 600;
+        }
+        .login-btn {
+            margin-top: 1.5rem;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container login-container glass-panel">
+        <div class="login-header">
+            <h1>🔐 Đăng Nhập</h1>
+            <p>Hệ thống Học tập Toán Tiểu học</p>
+        </div>
+
+        <main>
+            {% if error %}
+            <div class="error-msg">⚠️ {{ error }}</div>
+            {% endif %}
+            
+            <form action="/login" method="POST">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="username">Tên đăng nhập</label>
+                    <input type="text" id="username" name="username" placeholder="Nhập tài khoản..." required>
+                </div>
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" id="password" name="password" placeholder="Nhập mật khẩu..." required>
+                </div>
+                <button type="submit" class="primary-btn login-btn">
+                    <span class="btn-text">Vào Hệ Thống 🚀</span>
+                </button>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

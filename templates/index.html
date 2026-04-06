@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Đề Kiểm Tra Lớp 2 Made by BO</title>
+    <meta name="description" content="Ứng dụng sinh đề kiểm tra thông minh sử dụng Google Gemini AI">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Thư viện Marked.js để parse Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Thư viện html2pdf để tải PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <header class="glass-panel" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+            <div>
+                <h1>✨ Hệ thống Học tập Toán Tiểu học</h1>
+                <p>Tạo đề ôn tập thông minh cho học sinh từ Lớp 1 đến Lớp 5</p>
+            </div>
+            <a href="/logout" class="secondary-btn" style="text-decoration: none; border-radius: 12px; padding: 0.6rem 1.2rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 600; font-size: 0.9rem;">
+                🚪 Đăng xuất
+            </a>
+        </header>
+
+        <main>
+            <section class="controls glass-panel">
+                <form id="generator-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="grade">Chọn Lớp</label>
+                            <select id="grade" name="grade">
+                                <option value="1">Lớp 1</option>
+                                <option value="2">Lớp 2</option>
+                                <option value="3">Lớp 3</option>
+                                <option value="4">Lớp 4</option>
+                                <option value="5">Lớp 5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="semester">Chọn Học kỳ</label>
+                            <select id="semester" name="semester">
+                                <option value="1">Học kỳ 1</option>
+                                <option value="2">Học kỳ 2</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="chapter">Chọn Chương</label>
+                            <select id="chapter" name="chapter">
+                                <!-- Điền tự động bằng JS -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="lesson">Chọn Bài học / Loại đề</label>
+                            <select id="lesson" name="lesson">
+                                <!-- Điền tự động bằng JS -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="count">Số lượng câu hỏi (Tối đa 10)</label>
+                            <input type="number" id="count" name="count" min="1" max="10" value="5">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="primary-btn" id="generate-btn">
+                        <span class="btn-text">Tạo Đề Ngay 🚀</span>
+                        <div class="loader hidden" id="loader"></div>
+                    </button>
+                </form>
+            </section>
+
+            <section class="result-area glass-panel hidden" id="result-container">
+                <div class="result-header">
+                    <h2>📝 Đề Thi Của Bạn</h2>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="toggle-answer-btn" class="secondary-btn">👁️ Hiện Đáp Án</button>
+                        <button id="export-pdf-btn" class="secondary-btn">📄 Tải PDF</button>
+                        <button id="print-btn" class="secondary-btn" onclick="window.print()">🖨️ In Đề Thi</button>
+                    </div>
+                </div>
+                <!-- Vùng hiển thị HTML xuất ra từ Markdown -->
+                <div id="exam-content" class="markdown-body"></div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="/static/script.js"></script>
+</body>
+</html>

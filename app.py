@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, jsonify, session, redirect, u
 from google import genai
 import os
 import json
+import re
+from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv(override=True) # Tải biến môi trường từ file .env (ghi đè nếu có thay đổi)
@@ -19,6 +21,62 @@ def load_users():
         if admin_pass:
             return {"admin": admin_pass}
         return {} # Từ chối đăng nhập nếu không có file hoặc cấu hình an toàn
+
+def save_users(users_db):
+    try:
+        with open('users.json', 'w', encoding='utf-8') as f:
+            json.dump(users_db, f, indent=4)
+    except Exception as e:
+        print(f"Lỗi khi lưu người dùng: {e}")
+
+def load_stats():
+    try:
+        if os.path.exists('usage_stats.json'):
+            with open('usage_stats.json', 'r', encoding='utf-8') as f:
+                return json.load(f)
+    except Exception as e:
+        print(f"Error loading stats: {e}")
+    
+    return {
+        "total_requests": 0,
+        "total_prompt_tokens": 0,
+        "total_completion_tokens": 0,
+        "history": [] # Lưu theo ngày [{date: '2024-04-10', requests: 5, tokens: 100}, ...]
+    }
+
+def save_stats(prompt_tokens, completion_tokens):
+    stats = load_stats()
+    today = datetime.now().strftime('%Y-%m-%d')
+    
+    # Cập nhật tổng số
+    stats["total_requests"] += 1
+    stats["total_prompt_tokens"] += prompt_tokens
+    stats["total_completion_tokens"] += completion_tokens
+    
+    # Cập nhật lịch sử theo ngày
+    found_today = False
+    for entry in stats["history"]:
+        if entry["date"] == today:
+            entry["requests"] += 1
+            entry["prompt_tokens"] += prompt_tokens
+            entry["completion_tokens"] += completion_tokens
+            found_today = True
+            break
+    
+    if not found_today:
+        stats["history"].append({
+            "date": today,
+            "requests": 1,
+            "prompt_tokens": prompt_tokens,
+            "completion_tokens": completion_tokens
+        })
+    
+    # Chỉ giữ lại 30 ngày gần nhất để file không quá lớn
+    if len(stats["history"]) > 30:
+        stats["history"] = stats["history"][-30:]
+        
+    with open('usage_stats.json', 'w', encoding='utf-8') as f:
+        json.dump(stats, f, indent=4)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -42,6 +100,36 @@ def login():
 def logout():
     session.pop('logged_in', None)
     return redirect(url_for('login'))
+
+@app.route('/change_password', methods=['GET', 'POST'])
+def change_password():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+        
+    error = None
+    success = None
+    if request.method == 'POST':
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+        username = session.get('username')
+        
+        users_db = load_users()
+        
+        if not username or username not in users_db:
+            error = "Lỗi xác thực. Vui lòng đăng nhập lại."
+        elif users_db[username] != current_password:
+            error = "Mật khẩu hiện tại không đúng!"
+        elif new_password != confirm_password:
+            error = "Mật khẩu xác nhận không khớp!"
+        elif not re.match(r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$", new_password):
+            error = "Mật khẩu mới không đạt yêu cầu. Tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt."
+        else:
+            users_db[username] = new_password
+            save_users(users_db)
+            success = "Đổi mật khẩu thành công!"
+            
+    return render_template('change_password.html', error=error, success=success)
 
 @app.route('/')
 def home():
@@ -97,25 +185,47 @@ Yêu cầu chi tiết:
 """
         
         response = client.models.generate_content(
-            model='gemini-2.5-flash',
+            model='gemini-2.0-flash', # Sửa lại model đúng định dạng nếu cần
             contents=prompt
         )
+        
+        # Lưu thống kê sử dụng
+        usage = response.usage_metadata
+        save_stats(usage.prompt_token_count, usage.candidates_token_count)
         
         # Làm sạch kết quả trả về (loại bỏ markdown blocks nếu có)
         clean_html = response.text.strip()
         if clean_html.startswith("```html"):
             clean_html = clean_html[7:]
         if clean_html.endswith("```"):
-            if clean_html.endswith("```"):
-                clean_html = clean_html[:-3]
+            clean_html = clean_html[:-3]
             
-        return jsonify({'html': clean_html.strip()})
+        return jsonify({
+            'html': clean_html.strip(),
+            'usage': {
+                'prompt_tokens': usage.prompt_token_count,
+                'completion_tokens': usage.candidates_token_count,
+                'total_tokens': usage.total_token_count
+            }
+        })
     except Exception as e:
         import traceback
         error_msg = f"{str(e)}\n{traceback.format_exc()}"
         if "429" in error_msg:
             error_msg = "Lỗi: Đã hết hạn mức sử dụng API (Quota Exceeded). Vui lòng thử lại sau vài phút."
         return jsonify({'error': error_msg}), 500
+
+@app.route('/admin')
+def admin_dashboard():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    return render_template('admin.html')
+
+@app.route('/api/stats')
+def get_stats():
+    if not session.get('logged_in'):
+        return jsonify({'error': 'Unauthorized'}), 401
+    return jsonify(load_stats())
 
 if __name__ == '__main__':
     # host='0.0.0.0' cho phép các máy tính khác trong mạng LAN truy cập vào

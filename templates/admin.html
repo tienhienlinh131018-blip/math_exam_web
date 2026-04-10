@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Giám Sát Quota - Math Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            padding: 1rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 1.5rem;
+        }
+        .chart-panel, .history-panel {
+            margin-bottom: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+        .chart-container {
+            flex-grow: 1;
+            min-height: 250px;
+            position: relative;
+        }
+        .history-container {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .history-table th, .history-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .history-table th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .auto-refresh-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse-animation 2s infinite;
+        }
+        @keyframes pulse-animation {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .back-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #6366f1;
+        }
+        @media (max-width: 900px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <a href="/" class="back-link">⬅️ Quay lại trang chủ</a>
+        
+        <header class="glass-panel" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1>📊 Quota Dashboard</h1>
+                <p>Giám sát lưu lượng sử dụng API Gemini của bạn</p>
+            </div>
+            <div class="auto-refresh-badge">
+                <div class="pulse"></div>
+                Tự động cập nhật
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="glass-panel stat-card">
+                <span class="stat-label">Tổng Requests</span>
+                <span class="stat-value" id="total-requests">0</span>
+            </div>
+            <div class="glass-panel stat-card">
+                <span class="stat-label">Tổng Tokens</span>
+                <span class="stat-value" id="total-tokens">0</span>
+            </div>
+            <div class="glass-panel stat-card">
+                <span class="stat-label">Prompt Tokens</span>
+                <span class="stat-value" id="total-prompt">0</span>
+            </div>
+            <div class="glass-panel stat-card">
+                <span class="stat-label">Response Tokens</span>
+                <span class="stat-value" id="total-completion">0</span>
+            </div>
+        </section>
+
+        <div class="dashboard-grid">
+            <section class="glass-panel chart-panel">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">📈 Lưu lượng (30 ngày gần nhất)</h3>
+                <div class="chart-container">
+                    <canvas id="usageChart"></canvas>
+                </div>
+            </section>
+
+            <section class="glass-panel history-panel">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">📜 Lịch sử chi tiết</h3>
+                <div class="history-container">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th style="position: sticky; top: 0; background: var(--glass-bg); z-index: 1;">Ngày</th>
+                                <th style="position: sticky; top: 0; background: var(--glass-bg); z-index: 1;">Requests</th>
+                                <th style="position: sticky; top: 0; background: var(--glass-bg); z-index: 1;">Tổng Tokens</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body">
+                            <!-- JS sẽ điền dữ liệu -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        let usageChart = null;
+
+        async function fetchStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                updateUI(data);
+            } catch (error) {
+                console.error('Lỗi khi tải thống kê:', error);
+            }
+        }
+
+        function updateUI(data) {
+            // Cập nhật các con số tổng
+            document.getElementById('total-requests').textContent = data.total_requests.toLocaleString();
+            document.getElementById('total-tokens').textContent = (data.total_prompt_tokens + data.total_completion_tokens).toLocaleString();
+            document.getElementById('total-prompt').textContent = data.total_prompt_tokens.toLocaleString();
+            document.getElementById('total-completion').textContent = data.total_completion_tokens.toLocaleString();
+
+            // Cập nhật bảng lịch sử
+            const historyBody = document.getElementById('history-body');
+            historyBody.innerHTML = '';
+            
+            const reversedHistory = [...data.history].reverse();
+            reversedHistory.forEach(entry => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${entry.date.slice(5)}</td>
+                    <td>${entry.requests}</td>
+                    <td><b style="color: #6366f1;">${((entry.prompt_tokens + entry.completion_tokens) / 1000).toFixed(1)}k</b></td>
+                `;
+                historyBody.appendChild(tr);
+            });
+
+            // Cập nhật biểu đồ
+            updateChart(data.history);
+        }
+
+        function updateChart(history) {
+            const ctx = document.getElementById('usageChart').getContext('2d');
+            
+            const labels = history.map(h => h.date);
+            const requestsData = history.map(h => h.requests);
+            const tokensData = history.map(h => (h.prompt_tokens + h.completion_tokens) / 1000); // Đổi sang K tokens cho dễ nhìn
+
+            if (usageChart) {
+                usageChart.destroy();
+            }
+
+            usageChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Số Requests',
+                            data: requestsData,
+                            backgroundColor: 'rgba(99, 102, 241, 0.5)',
+                            borderColor: '#6366f1',
+                            borderWidth: 1,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Tổng Tokens (Kilo-tokens)',
+                            data: tokensData,
+                            type: 'line',
+                            borderColor: '#a855f7',
+                            backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: { display: true, text: 'Số Requests' },
+                            beginAtZero: true
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            grid: { drawOnChartArea: false },
+                            title: { display: true, text: 'K-Tokens' },
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'top' }
+                    }
+                }
+            });
+        }
+
+        // Tải dữ liệu lần đầu
+        fetchStats();
+
+        // Tự động làm mới mỗi 10 giây
+        setInterval(fetchStats, 10000);
+    </script>
+</body>
+</html>
